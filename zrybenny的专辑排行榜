@@ -1,0 +1,39 @@
+album = []
+for line in open("album.txt",encoding="gbk",errors="ignore"):
+    text = line.strip().split("\t")
+    text[0] = float(text[0])
+    if len(text) == 2:
+        album.append(text)
+albumn = set()
+for element in range(len(album)):
+    albumn.add(album[element][1])
+albumn = list(albumn)
+point_list = []
+for element in range(len(albumn)):
+    point = 0
+    for in_element in range(len(album)):
+        if albumn[element] == album[in_element][1]:
+            point += album[in_element][0]
+    point_list.append(point)
+
+
+out_list = []
+for element in range(len(point_list)):
+    element_list = []
+    element_list.append(point_list[element]/100)
+    element_list.append(albumn[element])
+    out_list.append(element_list)
+for element in range(len(out_list)):
+    out_list[element][0] = float(out_list[element][0])
+out_list.sort(reverse=True)
+for element in range(len(out_list)):
+    pointof = out_list[element][0]
+    albumname = out_list[element][1]
+    out_list[element][1] = pointof
+    out_list[element][0] = albumname
+
+outf = open("albumrank.txt","w")
+for element in range(19):
+    outf.write(out_list[element][0]+2*"\t"+str(out_list[element][1])+"\n")
+outf.write(out_list[19][0]+2*"\t"+str(out_list[19][1]))
+outf.close()
